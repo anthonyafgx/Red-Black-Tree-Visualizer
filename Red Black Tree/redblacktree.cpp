@@ -23,7 +23,6 @@ void RedBlackTree::insert(int key)
 
 
 	/* BST Insertion */
-	
 	Node* y = nullptr;	//< x's parent
 	Node* x = mRoot;
 
