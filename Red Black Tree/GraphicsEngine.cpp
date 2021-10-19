@@ -64,9 +64,12 @@ bool GraphicsEngine::Initialize()
 void GraphicsEngine::LoadData()
 {
 	// Instert RBTree functions
-	RBTree.insert(8);
-	RBTree.insert(14);
-	RBTree.insert(1);
+	RBTree.Insert(8);
+	RBTree.Insert(14);
+	RBTree.Insert(1);
+	RBTree.Insert(56);
+	RBTree.Insert(17);
+	RBTree.Insert(255);
 
 }
 

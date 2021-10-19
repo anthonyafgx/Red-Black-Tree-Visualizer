@@ -12,6 +12,21 @@ const float NODES_DISTANCE = 1.5f;
 /* offset distance multiplier between root node and child nodes */
 float ROOT_OFFSET_DISTANCE = 3.0f;
 
+Node::Node(RedBlackTree* tree, int key) :
+	mKey(key),
+	mTree(tree),
+	mParent(nullptr),
+	mLeft(nullptr),
+	mRight(nullptr)
+{
+	mTree->AddNode(this);
+}
+
+Node::~Node()
+{
+	mTree->RemoveNode(this);
+}
+
 void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale)
 {
 	int texWidth;
@@ -31,14 +46,14 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 		SDL_Log("Error, no color found in Node");
 	}
 
-	std::string path = "Assets/" + pathColor + "/" + std::to_string(data) + ".png";
+	std::string path = "Assets/" + pathColor + "/" + std::to_string(mKey) + ".png";
 
 	SDL_Texture* texture = graphics->GetTexture(path);
 	SDL_QueryTexture(texture, NULL, NULL, &texWidth, &texHeight);
 
 	/* DRAW LINES */
 	// positions of childs
-	if (parent != nullptr)
+	if (mParent != nullptr)
 	{
 		ROOT_OFFSET_DISTANCE = 1;
 	}
@@ -51,7 +66,7 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 
 	SDL_SetRenderDrawColor(graphics->GetRenderer(), 10, 10, 10, 255);
 
-	if (left)
+	if (mLeft)
 	{
 		SDL_RenderDrawLine(
 			graphics->GetRenderer(),
@@ -61,7 +76,7 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 			leftPos.y
 			);
 	}
-	if (right)
+	if (mRight)
 	{
 		SDL_RenderDrawLine(
 			graphics->GetRenderer(),
@@ -95,12 +110,12 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 	}
 
 	// Draw Childs
-	if (left)
+	if (mLeft)
 	{
-		left->DrawNode(graphics, leftPos, scale);
+		mLeft->DrawNode(graphics, leftPos, scale);
 	}
-	if (right)
+	if (mRight)
 	{
-		right->DrawNode(graphics, rightPos, scale);
+		mRight->DrawNode(graphics, rightPos, scale);
 	}
 }

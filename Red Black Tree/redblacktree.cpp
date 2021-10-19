@@ -14,7 +14,7 @@ RedBlackTree::~RedBlackTree()
 	}
 }
 
-void RedBlackTree::insert(int key)
+void RedBlackTree::Insert(int key)
 {
 	// TO DO: First validate if key alredy exists.
 
@@ -38,25 +38,25 @@ void RedBlackTree::insert(int key)
 	while (x != nullptr)
 	{
 		y = x;
-		if ((newNode->data) < (x->data))
+		if (newNode->GetKey() < x->GetKey())
 		{
-			x = x->left;
+			x = x->GetLeft();
 		}
-		else if ((newNode->data) > (x->data))
+		else if (newNode->GetKey() > x->GetKey())
 		{
-			x = x->right;
+			x = x->GetRight();
 		}
 	}
 
 	// insert node
-	newNode->parent = y;
-	if ((newNode->data) < (y->data))
+	newNode->SetParent(y);
+	if (newNode->GetKey() < y->GetKey())
 	{
-		y->left = newNode;
+		y->SetLeft(newNode);
 	}
-	else if ((newNode->data) > (y->data))
+	else if (newNode->GetKey() > y->GetKey())
 	{
-		y->right = newNode;
+		y->SetRight(newNode);
 	}
 }
 

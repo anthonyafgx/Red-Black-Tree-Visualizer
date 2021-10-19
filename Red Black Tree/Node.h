@@ -13,31 +13,27 @@ class Node
 {	
 public:
 	// Constructor initializes everything to nullptr (except color).
-	Node(RedBlackTree* tree, int key) {
-		data = key;
-		parent = nullptr;
-		left = nullptr;
-		right = nullptr;
-		mTree = tree;
-
-		mTree->AddNode(this);
-	}
-
-	~Node()
-	{
-		mTree->RemoveNode(this);
-	}
+	Node(RedBlackTree* tree, int key);
+	~Node();
 
 	void DrawNode(class GraphicsEngine* graphics, const Coordinates pos, float scale);
 	
-	Node* GetParent() { return parent; }
+	// Setters / Getters
+	int GetKey() const { return mKey; }
+	void SetKey(int key) { mKey = key; }
+	Node* GetParent() const { return mParent; }
+	void SetParent(Node* node) { mParent = node; }
+	Node* GetLeft() const { return mLeft; }
+	void SetLeft(Node* node) { mLeft = node; }
+	Node* GetRight() const { return mRight; }
+	void SetRight(Node* node) { mRight = node; }
 	void SetColor(std::string str) { color = str; }
 
-public:	
-	int data;
-	Node* parent;
-	Node* left;
-	Node* right;
+private:	
+	int mKey;
+	Node* mParent;
+	Node* mLeft;
+	Node* mRight;
 
 private:
 	std::string color;

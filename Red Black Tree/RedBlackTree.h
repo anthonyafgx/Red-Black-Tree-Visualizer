@@ -8,7 +8,7 @@ public:
 	RedBlackTree();
 	~RedBlackTree();
 
-	void insert(int key);
+	void Insert(int key);
 	class Node* GetRootNode() { return mRoot; }
 
 	void AddNode(class Node* node);
