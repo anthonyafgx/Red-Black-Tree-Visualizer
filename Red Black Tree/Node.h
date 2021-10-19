@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "RedBlackTree.h"
 
 struct Coordinates
 {
@@ -12,11 +13,19 @@ class Node
 {	
 public:
 	// Constructor initializes everything to nullptr (except color).
-	Node(int key) {
+	Node(RedBlackTree* tree, int key) {
 		data = key;
 		parent = nullptr;
 		left = nullptr;
 		right = nullptr;
+		mTree = tree;
+
+		mTree->AddNode(this);
+	}
+
+	~Node()
+	{
+		mTree->RemoveNode(this);
 	}
 
 	void DrawNode(class GraphicsEngine* graphics, const Coordinates pos, float scale);
@@ -24,14 +33,14 @@ public:
 	Node* GetParent() { return parent; }
 	void SetColor(std::string str) { color = str; }
 
-public:
+public:	
 	int data;
-	std::string color;
 	Node* parent;
 	Node* left;
 	Node* right;
 
 private:
-
+	std::string color;
+	RedBlackTree* mTree;
 };
 

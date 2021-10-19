@@ -6,11 +6,19 @@ RedBlackTree::RedBlackTree() : mRoot(nullptr)
 
 }
 
+RedBlackTree::~RedBlackTree()
+{
+	while (!mNodes.empty())
+	{
+		delete mNodes.back();
+	}
+}
+
 void RedBlackTree::insert(int key)
 {
 	// TO DO: First validate if key alredy exists.
 
-	Node* newNode = new Node(key);
+	Node* newNode = new Node(this, key);
 	newNode->SetColor("red");
 
 	// if there's no root
@@ -51,3 +59,19 @@ void RedBlackTree::insert(int key)
 		y->right = newNode;
 	}
 }
+
+void RedBlackTree::AddNode(Node* node)
+{
+	mNodes.emplace_back(node);
+}
+
+void RedBlackTree::RemoveNode(Node* node)
+{
+	auto itr = std::find(mNodes.begin(), mNodes.end(), node);
+
+	if (itr != mNodes.end())
+	{
+		mNodes.erase(itr);
+	}
+}
+

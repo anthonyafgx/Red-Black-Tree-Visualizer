@@ -67,12 +67,6 @@ void GraphicsEngine::LoadData()
 	RBTree.insert(8);
 	RBTree.insert(14);
 	RBTree.insert(1);
-	RBTree.insert(3);
-	RBTree.insert(6);
-	RBTree.insert(4);
-	RBTree.insert(7);
-	RBTree.insert(13);
-	RBTree.insert(10);
 
 }
 
@@ -114,6 +108,10 @@ void GraphicsEngine::UpdateWindow()
 
 void GraphicsEngine::Shutdown()
 {
+	// Destroy RedBlackTree and Nodes
+	RBTree.~RedBlackTree();
+
+	// Destroy Textures
 	for (auto texture : mTextures)
 	{
 		SDL_DestroyTexture(texture.second);
