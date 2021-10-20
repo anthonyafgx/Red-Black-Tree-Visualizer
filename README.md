@@ -1,8 +1,6 @@
 <b> Important Note </b>
 
-Hello! I'm Anthony Ferrer, main developer of this project.
-Do not take this code as an example (yet) as it has a few wrong programming practices that I am aware of and soon will be fixed.
-With that said, enjoy and explore as much as you like.
+Hello! I'm Anthony Ferrer, main developer of this project. This is a relatively new project which helps to visualize Red-Black-Trees. There are a lot of planned features that will be added as the project grows. With that said, enjoy and explore as much as you like.
 
 <b> Red Black Tree Visualizer </b>
 
