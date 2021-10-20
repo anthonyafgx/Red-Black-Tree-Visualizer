@@ -1,6 +1,7 @@
 #include "Node.h"
 #include "GraphicsEngine.h"
 #include <string>
+#include <iostream>
 
 // Tuning Variables
 
@@ -27,17 +28,93 @@ Node::~Node()
 	mTree->RemoveNode(this);
 }
 
+void Node::LeftRotation()
+{
+	Node* y = mRight;
+
+	if (y)	// if y is not nullptr
+	{
+		mRight = y->GetLeft();
+
+		if (y->GetLeft())	// if exists
+		{
+			y->GetLeft()->SetParent(this);
+		}
+
+		y->SetParent(mParent);
+
+		if (!mParent)	// if root
+		{
+			mTree->SetRoot(y);
+		}
+		else if (this == mParent->GetLeft())
+		{
+			mParent->SetLeft(y);
+		}
+		else if (this == mParent->GetRight())
+		{
+			mParent->SetRight(y);
+		}
+
+		y->SetLeft(this);
+		mParent = y;
+	}
+	else
+	{
+		std::cout << "INFO: Could not perform LeftRotation\n";
+		return;
+	}
+}
+
+void Node::RightRotation()
+{
+	Node* y = mLeft;
+
+	if (y)	// if y is not nullptr
+	{
+		mLeft = y->GetRight();
+
+		if (y->GetRight())	// if exists
+		{
+			y->GetRight()->SetParent(this);
+		}
+
+		y->SetParent(mParent);
+
+		if (!mParent)	// if root
+		{
+			mTree->SetRoot(y);
+		}
+		else if (this == mParent->GetLeft())
+		{
+			mParent->SetLeft(y);
+		}
+		else if (this == mParent->GetRight())
+		{
+			mParent->SetRight(y);
+		}
+
+		y->SetRight(this);
+		mParent = y;
+	}
+	else
+	{
+		std::cout << "INFO: Could not perform RightRotation\n";
+		return;
+	}
+}
+
 void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale)
 {
 	int texWidth;
 	int texHeight;
 
 	std::string pathColor;
-	if (color == "red")
+	if (mColor == "red")
 	{
 		pathColor = "redcircle";
 	}
-	else if (color == "black")
+	else if (mColor == "black")
 	{
 		pathColor = "blackcircle";
 	}
@@ -117,5 +194,46 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 	if (mRight)
 	{
 		mRight->DrawNode(graphics, rightPos, scale);
+	}
+}
+
+Node* Node::GetUncle() const
+{
+	if (mParent)					// has parent
+	{
+		if (mParent->GetParent())	// has grandparent
+		{
+			if (mParent->IsLeft())
+			{
+				return mParent->GetParent()->GetRight();
+			}
+			else if (mParent->IsRight())
+			{
+				return mParent->GetParent()->GetLeft();
+			}
+			else
+			{
+				std::cout << "INFO: Uncle not found\n";
+				return nullptr;
+			}
+		}
+		else
+		{
+			std::cout << "Node does not have grand parent\n";
+			return nullptr;
+		}
+	}
+	else
+	{
+		std::cout << "INFO: Node does not have parent\n";
+		return nullptr;
+	}
+}
+
+Node* Node::GetGrandParent() const
+{
+	if (GetParent())
+	{
+		return mParent->GetParent();
 	}
 }

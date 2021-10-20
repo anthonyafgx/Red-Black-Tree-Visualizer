@@ -16,8 +16,9 @@ public:
 	Node(RedBlackTree* tree, int key);
 	~Node();
 
-	void DrawNode(class GraphicsEngine* graphics, const Coordinates pos, float scale);
-	
+	void LeftRotation();
+	void RightRotation();
+
 	// Setters / Getters
 	int GetKey() const { return mKey; }
 	void SetKey(int key) { mKey = key; }
@@ -27,7 +28,20 @@ public:
 	void SetLeft(Node* node) { mLeft = node; }
 	Node* GetRight() const { return mRight; }
 	void SetRight(Node* node) { mRight = node; }
-	void SetColor(std::string str) { color = str; }
+	std::string GetColor() const { return mColor; }
+	void SetColor(std::string str) { mColor = str; }
+
+	// Special Getters
+	Node* GetUncle() const;
+	Node* GetGrandParent() const;
+
+	// Bools
+	bool IsLeft() { return this == mParent->GetLeft(); }	// if node is left of parent
+	bool IsRight() { return this == mParent->GetRight(); }	// if node is right of parent
+	bool IsRoot() { return !static_cast<bool>(mParent); }	// if node is root
+
+	// Graphics
+	void DrawNode(class GraphicsEngine* graphics, const Coordinates pos, float scale);
 
 private:	
 	int mKey;
@@ -36,7 +50,7 @@ private:
 	Node* mRight;
 
 private:
-	std::string color;
+	std::string mColor;
 	RedBlackTree* mTree;
 };
 
