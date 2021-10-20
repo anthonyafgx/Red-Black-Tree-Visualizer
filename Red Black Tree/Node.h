@@ -22,22 +22,23 @@ public:
 	// Setters / Getters
 	int GetKey() const { return mKey; }
 	void SetKey(int key) { mKey = key; }
-	Node* GetParent() const { return mParent; }
+	Node* GetParent(){ return mParent; }
 	void SetParent(Node* node) { mParent = node; }
-	Node* GetLeft() const { return mLeft; }
+	Node* GetLeft(){ return mLeft; }
 	void SetLeft(Node* node) { mLeft = node; }
-	Node* GetRight() const { return mRight; }
+	Node* GetRight(){ return mRight; }
 	void SetRight(Node* node) { mRight = node; }
-	std::string GetColor() const { return mColor; }
-	void SetColor(std::string str) { mColor = str; }
+	char GetColor() const { return mColor; }
+	void SetColor(char c) { mColor = c; }
 
 	// Special Getters
-	Node* GetUncle() const;
-	Node* GetGrandParent() const;
+	Node* GetUncle();
+	char GetUncleColor();
+	Node* GetGrandParent();
 
 	// Bools
-	bool IsLeft() { return this == mParent->GetLeft(); }	// if node is left of parent
-	bool IsRight() { return this == mParent->GetRight(); }	// if node is right of parent
+	bool IsLeft();	// if node is left of parent
+	bool IsRight();	// if node is right of parent
 	bool IsRoot() { return !static_cast<bool>(mParent); }	// if node is root
 
 	// Graphics
@@ -50,7 +51,7 @@ private:
 	Node* mRight;
 
 private:
-	std::string mColor;
+	char mColor;
 	RedBlackTree* mTree;
 };
 

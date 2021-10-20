@@ -110,11 +110,11 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 	int texHeight;
 
 	std::string pathColor;
-	if (mColor == "red")
+	if (mColor == 'r')
 	{
 		pathColor = "redcircle";
 	}
-	else if (mColor == "black")
+	else if (mColor == 'b')
 	{
 		pathColor = "blackcircle";
 	}
@@ -197,7 +197,7 @@ void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale
 	}
 }
 
-Node* Node::GetUncle() const
+Node* Node::GetUncle()
 {
 	if (mParent)					// has parent
 	{
@@ -230,10 +230,38 @@ Node* Node::GetUncle() const
 	}
 }
 
-Node* Node::GetGrandParent() const
+char Node::GetUncleColor()
+{
+	if (!GetUncle())	// if uncle is nullptr
+	{
+		return 'b';
+	}
+	else
+	{
+		return GetUncle()->GetColor();
+	}
+}
+
+Node* Node::GetGrandParent()
 {
 	if (GetParent())
 	{
 		return mParent->GetParent();
+	}
+}
+
+bool Node::IsRight()
+{
+	if (mParent->GetRight())
+	{
+		return this == mParent->GetRight();
+	}
+}
+
+bool Node::IsLeft()
+{
+	if (mParent->GetLeft())
+	{
+		return this == mParent->GetLeft();
 	}
 }

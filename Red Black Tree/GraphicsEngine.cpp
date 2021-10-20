@@ -75,6 +75,7 @@ void GraphicsEngine::LoadData()
 	RBTree.Insert(3);
 	RBTree.Insert(4);
 	RBTree.Insert(5);
+	
 }
 
 void GraphicsEngine::GenerateOutput()

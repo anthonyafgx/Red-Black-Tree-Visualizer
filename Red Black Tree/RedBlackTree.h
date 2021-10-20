@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <queue>
 
 class RedBlackTree
 {
@@ -10,7 +11,11 @@ public:
 
 	// Data Structure Methods
 	void Insert(int key);
-	
+
+	// Internal Data Structure Methods
+	void FixInsertion(class Node* newNode);
+	void FixAll();
+
 	// Getters / Setters
 	class Node* GetRootNode() { return mRoot; }
 	void SetRoot(Node* node) { mRoot = node; }
@@ -19,7 +24,7 @@ public:
 	void RemoveNode(class Node* node);	//< Remove nodes from mNodes
 	
 private:
-	void FixInsertion(class Node* newNode);
+	
 
 private:
 	class Node* mRoot;
