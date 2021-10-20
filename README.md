@@ -13,6 +13,6 @@ This project consists of a implementation of a fully functional Red Black Tree D
 <hr>
 
 <b> Known Bugs </b>
-1. Nodes Collision (Visual only): In certain cases, one node may graphically overlap another node.
+1. Nodes Collision (Visual only): In certain cases, one node may graphically overlap with another.
 
 ![imageedit_5_7302819816](https://user-images.githubusercontent.com/89319333/138161192-c14cc384-cea3-4f0c-b9cb-a74419afeb34.jpg)
