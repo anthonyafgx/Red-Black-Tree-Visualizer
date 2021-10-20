@@ -73,6 +73,11 @@ void RedBlackTree::Insert(int key)
 
 void RedBlackTree::FixInsertion(Node* newNode)
 {
+	if (!newNode->GetParent())	// if does not have parent
+	{
+		return;
+	}
+
 	// Case 3: Parent is Red.
 	while (newNode->GetParent()->GetColor() == "red")
 	{
@@ -138,10 +143,20 @@ void RedBlackTree::FixInsertion(Node* newNode)
 				else if (newNode->IsRight())
 				{
 					newNode->GetParent()->LeftRotation();
-					// then 3.2.1 is applied
+					// then 3.2.3 is applied
 				}
 			}
 		}
+	}
+
+	// Fix Nodes (if applies)
+	if (newNode->GetLeft())			// if has left
+	{
+		FixInsertion(newNode->GetLeft());
+	}
+	else if (newNode->GetRight())	// if has right
+	{
+		FixInsertion(newNode->GetRight());
 	}
 }
 

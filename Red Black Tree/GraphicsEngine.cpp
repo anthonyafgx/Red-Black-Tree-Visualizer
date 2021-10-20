@@ -67,9 +67,14 @@ void GraphicsEngine::LoadData()
 	RBTree.Insert(61);
 	RBTree.Insert(52);
 	RBTree.Insert(85);
+	RBTree.Insert(76);
 	RBTree.Insert(93);
 	RBTree.Insert(100);
-
+	RBTree.Insert(1);
+	RBTree.Insert(2);
+	RBTree.Insert(3);
+	RBTree.Insert(4);
+	RBTree.Insert(5);
 }
 
 void GraphicsEngine::GenerateOutput()
