@@ -7,15 +7,16 @@ class GraphicsEngine
 {
 public: 
 	GraphicsEngine();
-
 	bool Initialize();
-	void GenerateOutput();
+	void RunLoop();
 	void Shutdown();
 
 	SDL_Texture* GetTexture(std::string path);
 	SDL_Renderer* GetRenderer() { return mRenderer; }
 
 private:
+	void ProcessInput();
+	void GenerateOutput();
 	void UpdateWindow();
 	void LoadData();
 	

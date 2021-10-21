@@ -3,6 +3,7 @@
 #include "RedBlackTree.h"
 #include "Node.h"
 #include <iostream>
+#include <stdio.h>
 
 GraphicsEngine::GraphicsEngine() : 
 	mIsRunning(true),
@@ -76,12 +77,27 @@ void GraphicsEngine::LoadData()
 	RBTree.Insert(3);
 	RBTree.Insert(4);
 	RBTree.Insert(5);
-	//RBTree.Delete(52);
+	/*
+	RBTree.Delete(52);
 	RBTree.Delete(5);
 	RBTree.Delete(93);
+	RBTree.Delete(61);
+	RBTree.Delete(85);
+	RBTree.Delete(100);
+	*/
 
-	RBTree.PostOrderTraversal(RBTree.GetRootNode());
 	
+}
+
+void GraphicsEngine::RunLoop()
+{
+	while (mIsRunning)
+	{
+		GenerateOutput();
+		UpdateWindow();
+		ProcessInput();
+	}
+	Shutdown();
 }
 
 void GraphicsEngine::GenerateOutput()
@@ -94,11 +110,34 @@ void GraphicsEngine::GenerateOutput()
 	RBTree.GetRootNode()->DrawNode(this, Coordinates(640, 50), 1.0f);
 
 	SDL_RenderPresent(mRenderer);
+}
 
-	// Handle SDL Events (Windows buttons)
-	while (mIsRunning)
+void GraphicsEngine::ProcessInput()
+{
+	const Uint8* state = SDL_GetKeyboardState(NULL);
+	
+	if (state[SDL_SCANCODE_T])
 	{
-		UpdateWindow();
+		std::string task;
+		int value;
+
+		std::cout << "Enter your command: ";
+		std::cin >> task >> value;
+
+		// TO DO: Implement input validation (and convert everything to UPPERCASE)
+
+		if (task == "QUIT" || task == "Q")
+		{
+			mIsRunning = false;
+		}
+		else if (task == "INSERT")
+		{
+			RBTree.Insert(value);
+		}
+		else if (task == "DELETE")
+		{
+			RBTree.Delete(value);
+		}
 	}
 }
 

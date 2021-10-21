@@ -3,16 +3,6 @@
 #include <string>
 #include <iostream>
 
-// Tuning Variables
-
-/* distance multiplier between nodes
-* where n = balls of distance (in x and y direction)
-*/
-const float NODES_DISTANCE = 1.5f; 
-
-/* offset distance multiplier between root node and child nodes */
-float ROOT_OFFSET_DISTANCE = 3.0f;
-
 Node::Node(RedBlackTree* tree, int key) :
 	mKey(key),
 	mTree(tree),
@@ -106,6 +96,16 @@ void Node::RightRotation()
 
 void Node::DrawNode(GraphicsEngine* graphics, const Coordinates pos, float scale)
 {
+	// Tuning Variables
+
+	/* distance multiplier between nodes
+	* where n = balls of distance (in x and y direction)
+	*/
+	const float NODES_DISTANCE = 1.5f;
+
+	/* offset distance multiplier between root node and child nodes */
+	float ROOT_OFFSET_DISTANCE = 3.0f;
+
 	int texWidth;
 	int texHeight;
 

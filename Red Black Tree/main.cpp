@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 
 	if (success)
 	{
-		graphics.GenerateOutput();
+		graphics.RunLoop();
 	}
 	graphics.Shutdown();
 
