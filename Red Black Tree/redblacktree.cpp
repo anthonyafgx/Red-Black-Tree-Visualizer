@@ -146,6 +146,253 @@ void RedBlackTree::FixInsertion(Node* newNode)
 	mRoot->SetColor('b');
 }
 
+void RedBlackTree::Delete(int key)
+{
+	Node* x = nullptr;
+	Node* y = nullptr;
+	Node* z = nullptr;
+	
+	Node* search = mRoot;
+
+	// Search for key
+	while (search != nullptr)
+	{
+		if (search->GetKey() == key)	// success
+		{
+			z = search;
+		}
+
+		if (search->GetKey() <= key)
+		{
+			search = search->GetRight();
+		}
+		else if (search->GetKey() > key)
+		{
+			search = search->GetLeft();
+		}
+	}
+
+	if (!z)	// if not found (nullptr)
+	{
+		std::cout << "Key not found\n";
+		return;
+	}
+
+	y = z;
+	
+	char yFirstColor = y->GetColor();
+
+	if (!z->GetLeft() && !z->GetRight())	// if leaf node
+	{
+		// delete parent's childs
+		z->GetParent()->SetRight(nullptr);
+		z->GetParent()->SetLeft(nullptr);
+
+		// delete node
+		delete z;
+		return;
+	}
+	else if (!z->GetLeft())			// if does not have left
+	{
+		x = z->GetRight();
+		NodeReplace(z, z->GetRight());
+	}
+	else if (!z->GetRight())		// if does not have right
+	{
+		x = z->GetLeft();
+		NodeReplace(z, z->GetLeft());
+	}
+	else
+	{
+		y = Minimum(z->GetRight());
+		yFirstColor = y->GetColor();
+		x = y->GetRight();
+		if (y->GetParent() == z)
+		{
+			x->SetParent(y);
+		}
+		else
+		{
+			NodeReplace(y, y->GetRight());
+			y->SetRight(z->GetRight());
+			y->GetRight()->SetParent(y);
+		}
+
+		NodeReplace(z, y);
+		y->GetLeft()->SetLeft(z->GetLeft());
+		y->GetLeft()->SetParent(y);
+		y->SetColor(z->GetColor());
+	}
+	delete z;
+
+	if (yFirstColor == 'b')
+	{
+		FixDelete(x);
+	}
+}
+
+void RedBlackTree::FixDelete(Node* node)
+{
+	Node* sibling;
+	
+	// Case 3: node is Black
+	while (node->GetColor() == 'b' && node != mRoot)
+	{
+		if (node->IsLeft())
+		{
+			sibling = node->GetParent()->GetRight();	// Get Sibling
+			
+			// Case 3.1: Sibling is Red
+			if (sibling->GetColor() == 'r')
+			{
+				sibling->SetColor('b');
+				node->GetParent()->SetColor('r');
+				node->GetParent()->LeftRotation();
+
+				// update sibling variable
+				sibling = node->GetParent()->GetRight();
+
+				// now the case continues to case 3.2, 3.3 or 3.4 
+			}
+
+			// Case 3.2: Sibling is black and it's children are black
+			if (sibling->GetLeft()->GetColor() == 'b' &&
+				sibling->GetRight()->GetColor() == 'b')
+			{
+				sibling->SetColor('r');
+				node->SetParent(node->GetParent());
+
+				// now the case continues to 3.1
+			}
+			else
+			{
+				// Case 3.3: Sibling is black.
+				//		Sibling's Left child is red.
+				//		Sibling's Right child is black.
+				if (sibling->GetLeft()->GetColor() == 'r' &&
+					sibling->GetRight()->GetColor() == 'b')
+				{
+					sibling->GetLeft()->SetColor('b');
+					sibling->SetColor('r');
+					sibling->RightRotation();
+
+					// update sibling variable
+					sibling = node->GetParent()->GetRight();
+
+					// continue to case 3.4 directly
+				}
+				// Case 3.4: Sibling is black.
+				//		Sibling's Right child is red.
+				sibling->GetRight()->SetColor('b');
+				node->GetParent()->SetColor('b');
+				node->GetParent()->LeftRotation();
+				node = mRoot;
+			}
+		}
+		else  // mirror previous cases. (interchange Left with Right).
+		{
+			sibling = node->GetParent()->GetLeft();	// Get Sibling
+
+			// Case 3.1: Sibling is Red
+			if (sibling->GetColor() == 'r')
+			{
+				sibling->SetColor('b');
+				node->GetParent()->SetColor('r');
+				node->GetParent()->RightRotation();
+
+				// update sibling variable
+				sibling = node->GetParent()->GetLeft();
+
+				// now the case continues to case 3.2, 3.3 or 3.4 
+			}
+
+			// Case 3.2: Sibling is black and it's children are black
+			if (sibling->GetRight()->GetColor() == 'b' &&
+				sibling->GetLeft()->GetColor() == 'b')
+			{
+				sibling->SetColor('r');
+				node->SetParent(node->GetParent());
+
+				// now the case continues to 3.1
+			}
+			else
+			{
+				// Case 3.3: Sibling is black.
+				//		Sibling's Right child is red.
+				//		Sibling's Left child is black.
+				if (sibling->GetRight()->GetColor() == 'r' &&
+					sibling->GetLeft()->GetColor() == 'b')
+				{
+					sibling->GetRight()->SetColor('b');
+					sibling->SetColor('r');
+					sibling->LeftRotation();
+
+					// update sibling variable
+					sibling = node->GetParent()->GetLeft();
+
+					// continue to case 3.4 directly
+				}
+				// Case 3.4: Sibling is black.
+				//		Sibling's Left child is red.
+				sibling->GetLeft()->SetColor('b');
+				node->GetParent()->SetColor('b');
+				node->GetParent()->RightRotation();
+				node = mRoot;
+			}
+		}
+	}
+	node->SetColor('b');
+}
+
+Node* RedBlackTree::Minimum()
+{
+	return Minimum(mRoot);
+}
+
+Node* RedBlackTree::Minimum(Node* startNode)
+{
+	// path is all the way left.
+	while (startNode->GetLeft())		// while not nullptr
+	{
+		startNode = startNode->GetLeft();
+	}
+	return startNode;
+}
+
+Node* RedBlackTree::Maximum()
+{
+	return Maximum(mRoot);
+}
+
+Node* RedBlackTree::Maximum(Node* startNode)
+{
+	// path is all the way right.
+	while (startNode->GetLeft())		// while not nullptr
+	{
+		startNode = startNode->GetRight();
+	}
+	return startNode;
+}
+
+/* Node b will take the place of Node a */
+void RedBlackTree::NodeReplace(Node* a, Node* b)
+{
+	if (!a->GetParent())
+	{
+		mRoot = b;
+	}
+	else if (a->IsLeft())
+	{
+		a->GetParent()->SetLeft(b);
+	}
+	else if (a->IsRight())
+	{
+		a->GetParent()->SetRight(b);
+	}
+
+	b->SetParent(a->GetParent());
+}
+
 void RedBlackTree::AddNode(Node* node)
 {
 	mNodes.emplace_back(node);

@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "RedBlackTree.h"
+//#include "RedBlackTree.h"
 
 struct Coordinates
 {
@@ -13,7 +13,7 @@ class Node
 {	
 public:
 	// Constructor initializes everything to nullptr (except color).
-	Node(RedBlackTree* tree, int key);
+	Node(class RedBlackTree* tree, int key);
 	~Node();
 
 	void LeftRotation();
@@ -52,6 +52,6 @@ private:
 
 private:
 	char mColor;
-	RedBlackTree* mTree;
+	class RedBlackTree* mTree;
 };
 

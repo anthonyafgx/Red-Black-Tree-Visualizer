@@ -11,10 +11,13 @@ public:
 
 	// Data Structure Methods
 	void Insert(int key);
-
-	// Internal Data Structure Methods
-	void FixInsertion(class Node* newNode);
-	void FixAll();
+	void Delete(int key);
+	class Node* Minimum();
+	class Node* Minimum(class Node* startNode);	// overload
+	class Node* Maximum();
+	class Node* Maximum(class Node* startNode);	// overload
+	
+	
 
 	// Getters / Setters
 	class Node* GetRootNode() { return mRoot; }
@@ -24,7 +27,12 @@ public:
 	void RemoveNode(class Node* node);	//< Remove nodes from mNodes
 	
 private:
-	
+	// Internal Data Structure Methods
+	void FixInsertion(class Node* newNode);
+	void FixDelete(class Node* node);
+
+	// Replace
+	void NodeReplace(Node* a, Node* b);
 
 private:
 	class Node* mRoot;
