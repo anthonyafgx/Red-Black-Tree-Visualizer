@@ -2,6 +2,7 @@
 #include "SDL_image.h"
 #include "RedBlackTree.h"
 #include "Node.h"
+#include <iostream>
 
 GraphicsEngine::GraphicsEngine() : 
 	mIsRunning(true),
@@ -78,6 +79,8 @@ void GraphicsEngine::LoadData()
 	//RBTree.Delete(52);
 	RBTree.Delete(5);
 	RBTree.Delete(93);
+
+	RBTree.PostOrderTraversal(RBTree.GetRootNode());
 	
 }
 

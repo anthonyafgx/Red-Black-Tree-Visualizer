@@ -12,6 +12,10 @@ public:
 	// Data Structure Methods
 	void Insert(int key);
 	void Delete(int key);
+	class Node* Find(int key);
+	void PreOrderTraversal(Node* node);
+	void InOrderTraversal(Node* node);
+	void PostOrderTraversal(Node* node);
 	class Node* Minimum();
 	class Node* Minimum(class Node* startNode);	// overload
 	class Node* Maximum();

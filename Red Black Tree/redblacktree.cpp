@@ -344,6 +344,65 @@ void RedBlackTree::FixDelete(Node* node)
 	node->SetColor('b');
 }
 
+Node* RedBlackTree::Find(int key)
+{
+	Node* search = mRoot;
+
+	while (search)
+	{
+		if (key == search->GetKey())
+		{
+			break;
+		}
+		else
+		{
+			if (key > search->GetKey())
+			{
+				search = search->GetRight();
+			}
+			else
+			{
+				search = search->GetLeft();
+			}
+		}
+	}
+
+	return search;
+}
+
+void RedBlackTree::PreOrderTraversal(Node* node)
+{
+	// explore recursively down the tree.
+	if (node)	// not null
+	{
+		std::cout << node->GetKey() << std::endl;
+		PreOrderTraversal(node->GetLeft());
+		PreOrderTraversal(node->GetRight());
+	}
+}
+
+void RedBlackTree::InOrderTraversal(Node* node)
+{
+	// explore recursively down the tree.
+	if (node)	// not null
+	{
+		InOrderTraversal(node->GetLeft());
+		std::cout << node->GetKey() << std::endl;
+		InOrderTraversal(node->GetRight());
+	}
+}
+
+void RedBlackTree::PostOrderTraversal(Node* node)
+{
+	// explore recursively down the tree.
+	if (node)	// not null
+	{
+		PostOrderTraversal(node->GetLeft());
+		PostOrderTraversal(node->GetRight());
+		std::cout << node->GetKey() << std::endl;
+	}
+}
+
 Node* RedBlackTree::Minimum()
 {
 	return Minimum(mRoot);
