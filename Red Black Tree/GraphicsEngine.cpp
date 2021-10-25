@@ -66,6 +66,7 @@ bool GraphicsEngine::Initialize()
 void GraphicsEngine::LoadData()
 {
 	// Instert RBTree functions
+	/*
 	RBTree.Insert(61);
 	RBTree.Insert(52);
 	RBTree.Insert(85);
@@ -107,7 +108,10 @@ void GraphicsEngine::GenerateOutput()
 	SDL_RenderClear(mRenderer);
 
 	// Draw every node
-	RBTree.GetRootNode()->DrawNode(this, Coordinates(640, 50), 1.0f);
+	if (RBTree.GetRootNode())
+	{
+		RBTree.GetRootNode()->DrawNode(this, Coordinates(640, 50), 1.0f);
+	}
 
 	SDL_RenderPresent(mRenderer);
 }
@@ -137,6 +141,18 @@ void GraphicsEngine::ProcessInput()
 		else if (task == "DELETE")
 		{
 			RBTree.Delete(value);
+		}
+		else if (task == "PREORDER")
+		{
+			RBTree.PreOrderTraversal(RBTree.GetRootNode());
+		}
+		else if (task == "POSTORDER")
+		{
+			RBTree.PostOrderTraversal(RBTree.GetRootNode());
+		}
+		else if (task == "INORDER")
+		{
+			RBTree.InOrderTraversal(RBTree.GetRootNode());
 		}
 	}
 }
